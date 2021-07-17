@@ -83,6 +83,40 @@
         }
 
         /**
+         * 登入系統
+         *
+         * @param string $email 信箱
+         * @param string $passwd 密碼
+         *
+         * @var string $sql 查找帳號
+         *
+         * @return mixed
+         */
+        public function login($email, $passwd)
+        {
+            $sql = "SELECT 'name', 'email' FROM member_info WHERE email='$email' AND passwd='$passwd'";
+            mysqli_query($this->connect, $sql);
+            $result = $this->connect->affected_rows;
+            if($result != 1){
+                return false;
+            }else{
+                return $result;
+            }
+        }
+
+        public function emailCheck($email)
+        {
+            $sql = "SELECT 'email' FROM member_info WHERE email='$email'";
+            mysqli_query($this->connect, $sql);
+            $result = $this->connect->affected_rows;
+            if($result != 0){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        /**
          * 解構子
          *
          * 關閉資料庫
